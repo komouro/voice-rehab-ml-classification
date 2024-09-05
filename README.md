@@ -20,11 +20,7 @@ Lee Silverman Voice Treatment (LSVT) is a speech therapy program that helps peop
 
 2. **Data Preprocessing**: The dataset was cleaned, scaled and split into training and testing sets to ensure fair evaluation of the models.
 
-3. **Model Selection**: Three classification models were selected based on their general performance in binary classification tasks:
-
-* Support Vector Classifier (SVC) for its ability to handle non-linear separations.
-* Logistic Regression (LogReg) as a baseline for comparison.
-* Multi-layer Perceptron (MLP) for its potential to model complex patterns.
+3. **Model Selection**: Three classification models were selected based on their general performance in binary classification tasks: a) *Support Vector Classifier (SVC)* for its ability to handle non-linear separations, b) *Logistic Regression (LogReg)* as a baseline for comparison and c) *Multi-layer Perceptron (MLP)* for its potential to model complex patterns.
 
 4. **Hyperparameter Tuning**: We conducted a comprehensive grid search for each model to fine-tune hyperparameters and optimize performance. The goal was to improve metrics such as recall and F1 score, especially for the unacceptable class.
 
