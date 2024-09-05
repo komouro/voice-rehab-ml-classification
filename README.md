@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project aims to develop a robust machine learning model to classify the acceptability of patients' voices post-rehabilitation. Accurate classification of voices into acceptable and unacceptable categories is critical for evaluating the success of rehabilitation procedures and guiding further treatments. Our solution focuses on building a high-performance classification system to correctly replicate the experts' binary assessment. We experimented with default and tuned architectures for each model type, optimizing performance through hyperparameter tuning using grid search. The results were then compared using various performance metrics, including accuracy, precision, recall, F1 score and confusion matrices.
+This project aims to develop a robust machine learning model to classify the acceptability of patients' voices post-rehabilitation. Accurate classification of voices into acceptable and unacceptable categories is critical for evaluating the success of rehabilitation procedures and guiding further treatments. Our solution focuses on building a high-performance classification system in Python using three separate models to correctly replicate the experts' binary assessment. We experimented with default and tuned architectures for each model type, optimizing performance through hyperparameter tuning using grid search. The results were then compared using various performance metrics, including accuracy, precision, recall, F1 score and confusion matrices.
 
 ## Theoretical Background
 
@@ -18,13 +18,13 @@ Lee Silverman Voice Treatment (LSVT) is a speech therapy program that helps peop
 
 1. **Problem Framing**: We identified the key challenge as classifying patient voices into acceptable (1) and unacceptable (2) categories, where identifying unacceptable cases (true positives) is critical.
 
-2. **Data Preprocessing**: The dataset was cleaned, scaled, and split into training and testing sets to ensure fair evaluation of the models.
+2. **Data Preprocessing**: The dataset was cleaned, scaled and split into training and testing sets to ensure fair evaluation of the models.
 
 3. **Model Selection**: Three classification models were selected based on their general performance in binary classification tasks:
 
-- Support Vector Classifier (SVC) for its ability to handle non-linear separations.
-- Logistic Regression (LogReg) as a baseline for comparison.
-- Multi-layer Perceptron (MLP) for its potential to model complex patterns.
+* Support Vector Classifier (SVC) for its ability to handle non-linear separations.
+* Logistic Regression (LogReg) as a baseline for comparison.
+* Multi-layer Perceptron (MLP) for its potential to model complex patterns.
 
 4. **Hyperparameter Tuning**: We conducted a comprehensive grid search for each model to fine-tune hyperparameters and optimize performance. The goal was to improve metrics such as recall and F1 score, especially for the unacceptable class.
 
