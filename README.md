@@ -40,6 +40,12 @@ We analyzed the impact of hyperparameter tuning on model performance by plotting
 - Logistic Regression remained relatively stable, with slight gains in F1 score after tuning.
 - MLPClassifier showed significant improvements post-tuning, particularly in recall and F1 score.
 
+![Comparison of Default and Tuned Architectures on Accuracy](./plots/tuned_vs_default_accuracy_plot.png)
+
+![Comparison of Default and Tuned Architectures on F1-micro](./plots/tuned_vs_default_f1_macro_plot.png)
+
+![Comparison of Default and Tuned Architectures on F1-macro](./plots/tuned_vs_default_f1_micro_plot.png)
+
 Key takeaway: MLP benefited the most from tuning, making it a strong candidate for this problem.
 
 ### Final Model Testing Accuracy Comparison
@@ -49,6 +55,8 @@ We compared the final testing accuracies of the SVC, LogReg and MLP models. The 
 - SVC achieved an accuracy of 82.64%, with balanced precision and recall.
 - LogReg yielded an accuracy of 83.45%, performing consistently but without excelling in recall.
 - MLP demonstrated the highest accuracy of 86.27%, making it the most effective model overall.
+
+![Testing Accuracy of Selected Architectures](./plots/testing_accuracy_plot.png)
 
 Key takeaway: MLPClassifier stands out with both high accuracy and recall, making it an excellent choice for the task.
 
