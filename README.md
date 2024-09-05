@@ -41,7 +41,7 @@ We began with a broad range of models to compare the performance of their tuned 
 - **Decision Tree**: A model that splits the data into branches based on feature thresholds.
 - **Gradient Boosting Classifier**: An ensemble model that builds decision trees sequentially to improve performance.
 - **AdaBoost Classifier**: A boosting technique that adjusts the weights of observations and builds models iteratively.
-- **Multi-Layer Perceptron (MLP)**: A type of artificial neural network known for its flexibility and ability to capture non-linear relationships.
+- **Multi-Layer Perceptron Classifier (MLPClassifier)**: A type of artificial neural network known for its flexibility and ability to capture non-linear relationships.
 
 ### Hyperparameter Tuning
 
@@ -50,19 +50,19 @@ Each model's performance was improved by tuning key hyperparameters using a grid
 #### GaussianNB:
 
 ```
-- var_smoothing: Controls the variance of the Gaussian smoothing applied to each feature. Smaller values result in more variance, helping avoid overfitting.
+var_smoothing: Controls the variance of the Gaussian smoothing applied to each feature.
 ```
 
 #### K-Nearest Neighbors (KNN):
 ```
-- n_neighbors: Number of neighbors to consider for majority voting.
-- weights: Determines whether the neighbors' votes are weighted by distance or uniformly.
-- p: Power parameter for the Minkowski distance metric.
+n_neighbors: Number of neighbors to consider for majority voting.
+weights: Determines whether the neighbors' votes are weighted by distance or uniformly.
+p: Power parameter for the Minkowski distance metric.
 ```
 
 #### SVC:
 ```
-C: Regularization parameter, controlling the trade-off between maximizing the margin and minimizing classification error.
+C: Regularization parameter for the trade-off between margin and classification error.
 kernel: Choice of kernel function (linear, radial basis, polynomial, sigmoid).
 gamma: Defines how far the influence of a single training example reaches.
 ```
@@ -101,7 +101,7 @@ n_estimators: Number of boosting stages.
 learning_rate: Controls the contribution of each weak learner.
 ```
 
-#### MLP:
+#### MLPClassifier:
 ```
 hidden_layer_sizes: Number of neurons in each hidden layer.
 solver: Optimization algorithm (adam, sgd, lbfgs).
@@ -117,17 +117,13 @@ To ensure the robustness of our results, cross-validation was applied during mod
 - Accuracy: The percentage of correctly classified samples.
 - F1 Score: The harmonic mean of precision and recall, providing a balanced measure, especially in imbalanced datasets.
 
-The final models were selected based on their performance across these metrics. The three classification models that were selected are: a) *Support Vector Classifier (SVC)*, b) *Logistic Regression (LogReg)* and c) *Multi-layer Perceptron (MLP)*.
+The final models were selected based on their performance across these metrics. The three classification models that were selected are: a) *Support Vector Classifier (SVC)*, b) *Logistic Regression (LogReg)* and c) *Multi-layer Perceptron Classifier (MLPClassifier)*.
 
 ## Solutions and Data Insights
 
 ### Default vs Tuned Model Architectures
 
-We analyzed the impact of hyperparameter tuning on model performance by plotting the comparison of default and tuned architectures for all three models. The following insights emerged:
-
-- Tuning SVC resulted in moderate improvements in precision and recall.
-- Logistic Regression remained relatively stable, with slight gains in F1 score after tuning.
-- MLPClassifier showed significant improvements post-tuning, particularly in recall and F1 score.
+We analyzed the impact of hyperparameter tuning on model performance by plotting the comparison of default and tuned architectures for all three models. The following plots depict the score for different default and tuned architectures. The main difference between the plots is the scoring criterion based on which the best tuned architecture is selected for each model type. The scoring criterion for the first plot is the accuracy. The scoring criterion for the second plot is the F1-micro. The scoring criterion for the third plot is the F1-macro.
 
 ![Comparison of Default and Tuned Architectures on Accuracy](./plots/tuned_vs_default_accuracy_plot.png)
 
@@ -135,32 +131,35 @@ We analyzed the impact of hyperparameter tuning on model performance by plotting
 
 ![Comparison of Default and Tuned Architectures on F1-macro](./plots/tuned_vs_default_f1_macro_plot.png)
 
-Key takeaway: MLP benefited the most from tuning, making it a strong candidate for this problem.
+Key takeaway: Models like KNN and GaussianNB are generally outperformed by more complex models like SVC, Logistic Regression and MLPClassifier. This is expected, as simpler models may not capture complex patterns in a high-dimensional dataset.
 
 ### Final Model Testing Accuracy Comparison
 
-We compared the final testing accuracies of the SVC, LogReg and MLP models. The plot reveals that:
-
-- SVC achieved an accuracy of 82.64%, with balanced precision and recall.
-- LogReg yielded an accuracy of 83.45%, performing consistently but without excelling in recall.
-- MLP demonstrated the highest accuracy of 86.27%, making it the most effective model overall.
+We compared the final testing statistics of the SVC, LogReg and MLPClassifier models. Our analysis reveals that Logistic Regression outperforms the other models with the highest testing accuracy (85%), while SVC and MLPClassifier both achieve 81%. The following plot depects the testing accuracy of the tuned architectures for three models types. The architectured were tuned based on the scoring criteria of accuracy, F1-micro and F1-macro.
 
 ![Testing Accuracy of Selected Architectures](./plots/testing_accuracy_plot.png)
 
-Key takeaway: MLPClassifier stands out with both high accuracy and recall, making it an excellent choice for the task.
+Key takeaway: Logistic Regression stands out with high accuracy, making it an excellent choice for the task.
 
 ### Confusion Matrix Analysis and F1 Scores
+
 The confusion matrices for the final models reveal detailed classification performance for both acceptable (1) and unacceptable (2) categories:
 
-- MLPClassifier shows a good F1 score of 87.18% and the highest recall at 89.47%. This means MLP is highly effective at identifying true positives for the unacceptable (2) class, which is crucial for our focus on voice rehabilitation cases that are deemed unsuccessful.
+- For SVC, the precision is high (88.89%), but the F1-macro score is lower compared to other models, indicating potential room for improvement in handling the imbalanced data, as it struggles with the minority class.
+- Logistic Regression has consistent precision, recall and F1 scores (all approximately 89%), indicating that it balances both classes well.
+- MLPClassifier shows a good F1 score (87.18%) and the highest recall (89.47%), making it a good option for identifying true positives, which might be crucial for identifying unacceptable voice rehabilitation outcomes.
 
-- SVC and LogReg had comparable F1 scores but slightly lower recall, making them less ideal for this specific problem, where unacceptable (2) cases need to be correctly identified more often.
+| Model              | Tuned Parameters (based on F1-macro)                                      | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
+|--------------------|---------------------------------------------------------------------------|------------------------------------------|
+| SVC                | C=1, gamma='auto'                                                         | 80.8%    | 88.9%     | 84.2%  | 86.5%    | 80.8%    | 76.6%    |
+| Logistic Regression| C=0.1, solver='liblinear'                                                 | 84.6%    | 89.5%     | 89.5%  | 89.5%    | 84.6%    | 80.5%    |
+| MLPClassifier      | alpha=0.001, hidden_layer_sizes=(100, 50, 25), max_iter=1000, solver='sgd'| 80.8%    | 85.0%     | 89.5%  | 87.1%    | 80.6%    | 74.4%    |
 
-Key takeaway: The MLPClassifier is the best option for identifying unacceptable voice rehabilitation outcomes, which may be the most critical aspect of this application. Its ability to maximize recall ensures fewer false negatives, leading to more accurate identification of problematic cases that require further intervention.
+Key takeaway: The Logistic Regression and MLPClassifier appear to be the best options for identifying unacceptable voice rehabilitation outcomes, which may be the most critical aspect of this application. Their ability to maximize recall ensures fewer false negatives, leading to more accurate identification of problematic cases that require further intervention.
 
 ## Conclusion
 
-This project demonstrated the power of machine learning in addressing complex, real-world challenges in voice rehabilitation classification. Through comprehensive model selection, tuning and evaluation, we found that MLPClassifier provided the most accurate and reliable performance, especially in identifying unacceptable cases, which could be crucial for improving patient outcomes. Further enhancements could involve adding more features or experimenting with ensemble techniques to boost model performance even further. The current solution, however, is robust and ready for deployment in clinical settings.
+This project demonstrated the power of machine learning in addressing complex, real-world challenges in voice rehabilitation classification. Through comprehensive model selection, tuning and evaluation, we found that Logistic Regression and MLPClassifier provided the most accurate and reliable performance, especially in identifying unacceptable cases, which could be crucial for improving patient outcomes. Further enhancements could involve adding more features or experimenting with ensemble techniques to boost model performance even further. The current solution, however, is robust and can be used for deployment in clinical settings.
 
 ## Citation
 Tsanas, A. (2014). LSVT Voice Rehabilitation [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C52S4Z.
