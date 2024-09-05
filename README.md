@@ -36,8 +36,8 @@ We began with a broad range of models to compare the performance of their tuned 
 - **Gaussian Naive Bayes (GaussianNB)**: A probabilistic model using Gaussian distribution assumptions.
 - **K-Nearest Neighbors (KNN)**: A distance-based algorithm that classifies based on the labels of nearby points in the dataset.
 - **Support Vector Classifier (SVC)**: A powerful classifier that works by finding the optimal hyperplane separating the classes.
-- **Logistic Regression (LogReg)**: A linear model used for binary classification.
-- **Random Forest (RandForest)**: An ensemble learning method combining multiple decision trees to increase accuracy and reduce overfitting.
+- **Logistic Regression**: A linear model used for binary classification.
+- **Random Forest**: An ensemble learning method combining multiple decision trees to increase accuracy and reduce overfitting.
 - **Decision Tree**: A model that splits the data into branches based on feature thresholds.
 - **Gradient Boosting Classifier**: An ensemble model that builds decision trees sequentially to improve performance.
 - **AdaBoost Classifier**: A boosting technique that adjusts the weights of observations and builds models iteratively.
@@ -53,7 +53,7 @@ Each model's performance was improved by tuning key hyperparameters using a grid
 var_smoothing: Controls the variance of the Gaussian smoothing applied to each feature.
 ```
 
-#### K-Nearest Neighbors (KNN):
+#### KNN:
 ```
 n_neighbors: Number of neighbors to consider for majority voting.
 weights: Determines whether the neighbors' votes are weighted by distance or uniformly.
@@ -118,7 +118,7 @@ To ensure the robustness of our results, cross-validation was applied during mod
 - F1-micro Score: The overall F1 score computed by aggregating the contributions of all classes and then computing the average. This metric is useful for evaluating models in terms of their performance across all classes.
 - F1-macro Score: The average F1 score computed for each class independently and then averaged. This metric gives equal weight to each class, making it particularly useful for evaluating models on imbalanced datasets.
 
-The final models were selected based on their performance across these metrics. The three classification models that were selected are: a) *Support Vector Classifier (SVC)*, b) *Logistic Regression (LogReg)* and c) *Multi-layer Perceptron Classifier (MLPClassifier)*.
+The final models were selected based on their performance across these metrics. The three classification models that were selected are: a) *Support Vector Classifier (SVC)*, b) *Logistic Regression* and c) *Multi-layer Perceptron Classifier (MLPClassifier)*.
 
 ## Solutions and Data Insights
 
@@ -136,7 +136,7 @@ Key takeaway: Models like KNN and GaussianNB are generally outperformed by more 
 
 ### Final Model Testing Accuracy Comparison
 
-We compared the final testing statistics of the SVC, LogReg and MLPClassifier models. Our analysis reveals that Logistic Regression outperforms the other models with the highest testing accuracy (85%), while SVC and MLPClassifier both achieve 81%. The following plot depects the testing accuracy of the tuned architectures for three models types. The architectured were tuned based on the scoring criteria of accuracy, F1-micro and F1-macro.
+We compared the final testing statistics of the SVC, Logistic Regression and MLPClassifier models. Our analysis reveals that Logistic Regression outperforms the other models with the highest testing accuracy (85%), while SVC and MLPClassifier both achieve 81%. The following plot depects the testing accuracy of the tuned architectures for three models types. The architectured were tuned based on the scoring criteria of accuracy, F1-micro and F1-macro.
 
 ![Testing Accuracy of Selected Architectures](./plots/testing_accuracy_plot.png)
 
