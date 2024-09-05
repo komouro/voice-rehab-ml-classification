@@ -20,11 +20,104 @@ Lee Silverman Voice Treatment (LSVT) is a speech therapy program that helps peop
 
 2. **Data Preprocessing**: The dataset was cleaned, scaled and split into training and testing sets to ensure fair evaluation of the models.
 
-3. **Model Selection**: Three classification models were selected based on their general performance in binary classification tasks: a) *Support Vector Classifier (SVC)* for its ability to handle non-linear separations, b) *Logistic Regression (LogReg)* as a baseline for comparison and c) *Multi-layer Perceptron (MLP)* for its potential to model complex patterns.
+3. **Model Selection**: A diverse set of machine learning models was explored to classify voice rehabilitation success. Our selection was driven by a combination of model interpretability, performance, and their ability to handle different data structures and distributions.
 
-4. **Hyperparameter Tuning**: We conducted a comprehensive grid search for each model to fine-tune hyperparameters and optimize performance. The goal was to improve metrics such as recall and F1 score, especially for the unacceptable class.
+4. **Hyperparameter Tuning**: We conducted a comprehensive grid search for each model to fine-tune hyperparameters and optimize performance. The goal was to improve metrics such as accuracy and F1 score.
 
-6. **Performance Comparison**: After tuning the models, we compared their performance across key metrics, with special attention to identifying true positives in the unacceptable class. Confusion matrices were also used to visualize classification errors.
+6. **Performance Comparison**: After tuning the models, we selected the best architectures and compared their performance across key metrics, with special attention to identifying true positives in the unacceptable class. Confusion matrices were also used to visualize classification errors.
+
+## Model Selection and Hyperparameter Tuning
+
+### Initial Model Selection
+
+We began with a broad range of models to compare the performance of their tuned and default architectures. Below is a summary of the models examined:
+
+- **Dummy Classifiers**: We used several baseline classifiers to establish a minimal benchmark for performance. Specifically, we defined a) *Dummy1* and *Dummy2* for constant strategies, where predictions are always 1 or 2 respectively, b) *DummyMF* for always predicting the most frequent class, c) *DummyUni* for uniform random predictions and d) *DummyStr* for stratified predictions based on class distribution.
+- **Gaussian Naive Bayes (GaussianNB)**: A probabilistic model using Gaussian distribution assumptions.
+- **K-Nearest Neighbors (KNN)**: A distance-based algorithm that classifies based on the labels of nearby points in the dataset.
+- **Support Vector Classifier (SVC)**: A powerful classifier that works by finding the optimal hyperplane separating the classes.
+- **Logistic Regression (LogReg)**: A linear model used for binary classification.
+- **Random Forest (RandForest)**: An ensemble learning method combining multiple decision trees to increase accuracy and reduce overfitting.
+- **Decision Tree**: A model that splits the data into branches based on feature thresholds.
+- **Gradient Boosting Classifier**: An ensemble model that builds decision trees sequentially to improve performance.
+- **AdaBoost Classifier**: A boosting technique that adjusts the weights of observations and builds models iteratively.
+- **Multi-Layer Perceptron (MLP)**: A type of artificial neural network known for its flexibility and ability to capture non-linear relationships.
+
+### Hyperparameter Tuning
+
+Each model's performance was improved by tuning key hyperparameters using a grid search approach. Below, we detail the key hyperparameters chosen for tuning and their role in model performance:
+
+#### GaussianNB:
+
+```
+- var_smoothing: Controls the variance of the Gaussian smoothing applied to each feature. Smaller values result in more variance, helping avoid overfitting.
+```
+
+#### K-Nearest Neighbors (KNN):
+```
+- n_neighbors: Number of neighbors to consider for majority voting.
+- weights: Determines whether the neighbors' votes are weighted by distance or uniformly.
+- p: Power parameter for the Minkowski distance metric.
+```
+
+#### SVC:
+```
+C: Regularization parameter, controlling the trade-off between maximizing the margin and minimizing classification error.
+kernel: Choice of kernel function (linear, radial basis, polynomial, sigmoid).
+gamma: Defines how far the influence of a single training example reaches.
+```
+
+#### Logistic Regression:
+```
+C: Inverse of regularization strength.
+solver: Algorithm to use for optimization.
+max_iter: Maximum number of iterations taken for the solvers to converge.
+```
+
+#### Random Forest:
+```
+n_estimators: Number of trees in the forest.
+max_features: Number of features to consider when looking for the best split.
+max_depth: Maximum depth of the tree.
+```
+
+#### Decision Tree:
+```
+criterion: Function to measure the quality of a split (Gini impurity or entropy).
+max_depth: Limits the depth of the tree to prevent overfitting.
+min_samples_split: Minimum number of samples required to split a node.
+```
+
+#### Gradient Boosting:
+```
+n_estimators: Number of boosting stages to perform.
+learning_rate: Shrinks the contribution of each tree by this factor.
+max_depth: Controls the depth of individual trees.
+```
+
+#### AdaBoost:
+```
+n_estimators: Number of boosting stages.
+learning_rate: Controls the contribution of each weak learner.
+```
+
+#### MLP:
+```
+hidden_layer_sizes: Number of neurons in each hidden layer.
+solver: Optimization algorithm (adam, sgd, lbfgs).
+activation: Activation function for the hidden layer (ReLU, tanh).
+alpha: L2 penalty (regularization term) to prevent overfitting.
+max_iter: Maximum number of iterations during training.
+```
+
+### Cross-Validation and Scoring Criteria
+
+To ensure the robustness of our results, cross-validation was applied during model evaluation, particularly using k-fold cross-validation. This process helped prevent overfitting by training the model on multiple subsets of the data and assessing its performance on unseen subsets. We used certain scoring criteria to evaluate the models:
+
+- Accuracy: The percentage of correctly classified samples.
+- F1 Score: The harmonic mean of precision and recall, providing a balanced measure, especially in imbalanced datasets.
+
+The final models were selected based on their performance across these metrics. The three classification models that were selected are: a) *Support Vector Classifier (SVC)*, b) *Logistic Regression (LogReg)* and c) *Multi-layer Perceptron (MLP)*.
 
 ## Solutions and Data Insights
 
