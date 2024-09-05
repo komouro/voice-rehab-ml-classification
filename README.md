@@ -42,9 +42,9 @@ We analyzed the impact of hyperparameter tuning on model performance by plotting
 
 ![Comparison of Default and Tuned Architectures on Accuracy](./plots/tuned_vs_default_accuracy_plot.png)
 
-![Comparison of Default and Tuned Architectures on F1-micro](./plots/tuned_vs_default_f1_macro_plot.png)
+![Comparison of Default and Tuned Architectures on F1-micro](./plots/tuned_vs_default_f1_micro_plot.png)
 
-![Comparison of Default and Tuned Architectures on F1-macro](./plots/tuned_vs_default_f1_micro_plot.png)
+![Comparison of Default and Tuned Architectures on F1-macro](./plots/tuned_vs_default_f1_macro_plot.png)
 
 Key takeaway: MLP benefited the most from tuning, making it a strong candidate for this problem.
 
