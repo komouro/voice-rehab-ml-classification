@@ -150,7 +150,7 @@ The confusion matrices for the final models reveal detailed classification perfo
 - Logistic Regression has consistent precision, recall and F1 scores (all approximately 89%), indicating that it balances both classes well.
 - MLPClassifier shows a good F1 score (87.18%) and the highest recall (89.47%), making it a good option for identifying true positives, which might be crucial for identifying unacceptable voice rehabilitation outcomes. However, its F1-macro score is also lower compared to Logistic Regression, indicating potential room for improvement in handling the imbalanced data.
 
-| Model              | Tuned Parameters (based on F1-macro)                                      | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
+| Model              | Tuned Hyperparameters (based on F1-macro)                                 | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
 |--------------------|---------------------------------------------------------------------------|----------|-----------|--------|----------|----------|----------|
 | SVC                | C=1, gamma='auto'                                                         | 80.8%    | 88.9%     | 84.2%  | 86.5%    | 80.8%    | 76.6%    |
 | Logistic Regression| C=0.1, solver='liblinear'                                                 | 84.6%    | 89.5%     | 89.5%  | 89.5%    | 84.6%    | 80.5%    |
