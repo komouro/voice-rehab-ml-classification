@@ -146,15 +146,15 @@ Key takeaway: Logistic Regression stands out with high accuracy, making it an ex
 
 The confusion matrices for the final models reveal detailed classification performance for both acceptable (1) and unacceptable (2) categories:
 
-- For SVC, the precision is high (88.89%), but the F1-macro score is lower compared to other models, indicating potential room for improvement in handling the imbalanced data, as it struggles with the minority class.
+- For SVC, the precision is high (88.89%), but the F1-macro score is lower compared to Logistic Regression, indicating potential room for improvement in handling the imbalanced data, as it struggles with the minority class.
 - Logistic Regression has consistent precision, recall and F1 scores (all approximately 89%), indicating that it balances both classes well.
-- MLPClassifier shows a good F1 score (87.18%) and the highest recall (89.47%), making it a good option for identifying true positives, which might be crucial for identifying unacceptable voice rehabilitation outcomes.
+- MLPClassifier shows a good F1 score (87.18%) and the highest recall (89.47%), making it a good option for identifying true positives, which might be crucial for identifying unacceptable voice rehabilitation outcomes. However, its F1-macro score is also lower compared to Logistic Regression, indicating potential room for improvement in handling the imbalanced data.
 
 | Model              | Tuned Parameters (based on F1-macro)                                      | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
 |--------------------|---------------------------------------------------------------------------|----------|-----------|--------|----------|----------|----------|
 | SVC                | C=1, gamma='auto'                                                         | 80.8%    | 88.9%     | 84.2%  | 86.5%    | 80.8%    | 76.6%    |
 | Logistic Regression| C=0.1, solver='liblinear'                                                 | 84.6%    | 89.5%     | 89.5%  | 89.5%    | 84.6%    | 80.5%    |
-| MLPClassifier      | alpha=0.001, hidden_layer_sizes=(100, 50, 25), max_iter=1000, solver='sgd'| 80.8%    | 85.0%     | 89.5%  | 87.1%    | 80.6%    | 74.4%    |
+| MLPClassifier      | alpha=0.001, hidden_layer_sizes=(100, 50, 25), max_iter=1000, solver='sgd'| 80.8%    | 85.0%     | 89.5%  | 87.2%    | 80.6%    | 74.4%    |
 
 Key takeaway: The Logistic Regression and MLPClassifier appear to be the best options for identifying unacceptable voice rehabilitation outcomes, which may be the most critical aspect of this application. Their ability to maximize recall ensures fewer false negatives, leading to more accurate identification of problematic cases that require further intervention.
 
