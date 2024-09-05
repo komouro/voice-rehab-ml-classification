@@ -115,7 +115,8 @@ max_iter: Maximum number of iterations during training.
 To ensure the robustness of our results, cross-validation was applied during model evaluation, particularly using k-fold cross-validation. This process helped prevent overfitting by training the model on multiple subsets of the data and assessing its performance on unseen subsets. We used certain scoring criteria to evaluate the models:
 
 - Accuracy: The percentage of correctly classified samples.
-- F1 Score: The harmonic mean of precision and recall, providing a balanced measure, especially in imbalanced datasets.
+- F1-micro Score: The overall F1 score computed by aggregating the contributions of all classes and then computing the average. This metric is useful for evaluating models in terms of their performance across all classes.
+- F1-macro Score: The average F1 score computed for each class independently and then averaged. This metric gives equal weight to each class, making it particularly useful for evaluating models on imbalanced datasets.
 
 The final models were selected based on their performance across these metrics. The three classification models that were selected are: a) *Support Vector Classifier (SVC)*, b) *Logistic Regression (LogReg)* and c) *Multi-layer Perceptron Classifier (MLPClassifier)*.
 
@@ -150,7 +151,7 @@ The confusion matrices for the final models reveal detailed classification perfo
 - MLPClassifier shows a good F1 score (87.18%) and the highest recall (89.47%), making it a good option for identifying true positives, which might be crucial for identifying unacceptable voice rehabilitation outcomes.
 
 | Model              | Tuned Parameters (based on F1-macro)                                      | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
-|--------------------|---------------------------------------------------------------------------|------------------------------------------|
+|--------------------|---------------------------------------------------------------------------|----------|-----------|--------|----------|----------|----------|
 | SVC                | C=1, gamma='auto'                                                         | 80.8%    | 88.9%     | 84.2%  | 86.5%    | 80.8%    | 76.6%    |
 | Logistic Regression| C=0.1, solver='liblinear'                                                 | 84.6%    | 89.5%     | 89.5%  | 89.5%    | 84.6%    | 80.5%    |
 | MLPClassifier      | alpha=0.001, hidden_layer_sizes=(100, 50, 25), max_iter=1000, solver='sgd'| 80.8%    | 85.0%     | 89.5%  | 87.1%    | 80.6%    | 74.4%    |
