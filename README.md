@@ -144,7 +144,7 @@ Key takeaway: MLPClassifier stands out with the highest possible accuracy, makin
 
 ### Analysis of Performance Metrics
 
-In this binary classification problem, we are predicting whether a patient’s voice rehabilitation is acceptable (class 1) or unacceptable (class 2). Class 2 ("unacceptable") is treated as the positive class, meaning a higher emphasis might be placed on Recall and F1-score for correctly identifying unacceptable cases, which could be critical for medical decisions. 
+In this binary classification problem, we are predicting whether a patient's voice rehabilitation is acceptable (class 1) or unacceptable (class 2). Class 2 ("unacceptable") is treated as the positive class, meaning a higher emphasis might be placed on Recall and F1-score for correctly identifying unacceptable cases, which could be critical for medical decisions. 
 
 | Model              | Tuned Hyperparameters (based on F1-micro)                     | Accuracy | Precision | Recall  | F1 score | F1-micro | F1-macro |
 |--------------------|---------------------------------------------------------------|----------|-----------|---------|----------|----------|----------|
