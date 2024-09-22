@@ -136,43 +136,45 @@ Key takeaway: Models like KNN and GaussianNB are generally outperformed by more 
 
 ### Final Model Testing Accuracy Comparison
 
-We compared the final testing statistics of the SVC, Logistic Regression and MLPClassifier models. Our analysis reveals that Logistic Regression outperforms the other models with the highest testing accuracy (85%), while SVC and MLPClassifier both achieve 81%. The following plot depects the testing accuracy of the tuned architectures for three models types. The architectured were tuned based on the scoring criteria of accuracy, F1-micro and F1-macro.
+We compared the final testing statistics of the SVC, Logistic Regression and MLPClassifier models. Our analysis reveals that MLPClassifier outperforms the other models with the highest possible testing accuracy (100%), while SVC and Logistic Regression achieve testing accuracy of 84.62% and 92.31% respectively. The following plot depects the testing accuracy of the tuned architectures for three models types. The architectures were tuned based on the scoring criteria of accuracy, F1-micro and F1-macro.
 
 ![Testing Accuracy of Selected Architectures](./plots/testing_accuracy_plot.png)
 
-Key takeaway: Logistic Regression stands out with high accuracy, making it an excellent choice for the task.
+Key takeaway: MLPClassifier stands out with the highest possible accuracy, making it an excellent choice for the task.
 
-### Confusion Matrix Analysis and F1 Scores
+### Analysis of Performance Metrics
 
-The confusion matrices for the final models reveal detailed classification performance for both acceptable (1) and unacceptable (2) categories:
+In this binary classification problem, we are predicting whether a patient’s voice rehabilitation is acceptable (class 1) or unacceptable (class 2). Class 2 ("unacceptable") is treated as the positive class, meaning a higher emphasis might be placed on Recall and F1-score for correctly identifying unacceptable cases, which could be critical for medical decisions. 
 
-- For SVC, the precision is high (88.89%), but the F1-macro score is lower compared to Logistic Regression, indicating potential room for improvement in handling the imbalanced data, as it struggles with the minority class.
-- Logistic Regression has consistent precision, recall and F1 scores (all approximately 89%), indicating that it balances both classes well.
-- MLPClassifier shows a good F1 score (87.18%) and the highest recall (89.47%), making it a good option for identifying true positives, which might be crucial for identifying unacceptable voice rehabilitation outcomes. However, its F1-macro score is also lower compared to Logistic Regression, indicating potential room for improvement in handling the imbalanced data.
+| Model              | Tuned Hyperparameters (based on F1-micro)                     | Accuracy | Precision | Recall  | F1 score | F1-micro | F1-macro |
+|--------------------|---------------------------------------------------------------|----------|-----------|---------|----------|----------|----------|
+| SVC                | C = 1, gamma = 1, kernel = 'poly'                             | 84.62%   | 78.95%    | 100.00% | 88.24%   | 84.62%   | 83.01%   |
+| Logistic Regression| C = 0.1                                                       | 92.31%   | 100.00%   | 86.67%  | 92.86%   | 92.31%   | 92.26%   |
+| MLPClassifier      | alpha = 0.01, hidden_layer_sizes = (100,50), solver = 'lbfgs' | 100.00%  | 100.00%   | 100.00% | 100.00%  | 100.00%  | 100.00%  |
 
-| Model              | Tuned Hyperparameters (based on Accuracy)                                 | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
-|--------------------|---------------------------------------------------------------------------|----------|-----------|--------|----------|----------|----------|
-| SVC                | C=0.01, gamma=1, kernel='poly'                                            | 88.46%   | 83.33%    | 100.00%| 90.91%   | 88.46%   | 87.56%   |
-| Logistic Regression| C=0.1                                                                     | 88.46%   | 100.00%   | 80.00% | 88.89%   | 88.46%   | 88.44%   |
-| MLPClassifier      | hidden_layer_sizes=(25), max_iter=1000, solver='sgd'                      | 88.46%   | 92.86%    | 86.67% | 89.67%    | 88.46%   | 88.31%  |
+The table above contains the performance metrics associated with each architecture that was tuned based on the scoring criteria of F1-micro.
 
-| Model              | Tuned Hyperparameters (based on F1-micro)                                 | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
-|--------------------|---------------------------------------------------------------------------|----------|-----------|--------|----------|----------|----------|
-| SVC                | C=1, gamma=1, kernel='poly'                                               | 84.62%   | 78.95%    | 100.00%| 88.24%   | 84.62%   | 83.01%   |
-| Logistic Regression| C=0.1                                                                     | 92.31%   | 100.00%   | 86.67% | 92.86%   | 92.31%   | 92.26%   |
-| MLPClassifier      | alpha=0.01, hidden_layer_sizes=(100, 50), solver='lbfgs'                  | 100.00%  | 100.00%   | 100.00%| 100.00%  | 100.00%  | 100.00%  |
+1. **SVC**
+- Recall of 100% means the SVC model identifies all "unacceptable" cases (class 2) correctly, which is crucial in the medical context since failing to identify unacceptable cases could have severe consequences for patient treatment. However, Precision is lower (78.95%), indicating that many of the cases it predicts as unacceptable (class 2) are actually acceptable (class 1). This high false positive rate could lead to unnecessary concern or additional testing.
+- F1-score (88.24%) balances Precision and Recall and shows that the model leans toward being more conservative, ensuring that no unacceptable case is missed. F1-micro (84.62%) gives an overall performance measure weighted by class frequency and F1-macro (83.01%) considers both classes equally, showing a slight imbalance favoring Recall over Precision.
 
-| Model              | Tuned Hyperparameters (based on F1-macro)                                           | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
-|--------------------|-------------------------------------------------------------------------------------|----------|-----------|--------|----------|----------|----------|
-| SVC                | C=1                                                                                 | 92.31%   | 100.00%   | 86.67% | 92.86%   | 92.31%   | 92.26%   |
-| Logistic Regression| C=0.1                                                                               | 84.62%   | 100.00%   | 73.33% | 84.62%   | 84.62%   | 84.62%   |
-| MLPClassifier      | activation='tanh', alpha=0.01, hidden_layer_sizes=(50), max_iter=1000, solver='sgd' | 92.31%   | 100.00%   | 86.67% | 92.86%   | 92.31%   | 92.26%   |
+Key takeaway: SVC is strong at identifying unacceptable cases (high Recall), but its lower Precision suggests a higher rate of false positives. If the focus is to ensure that no unacceptable case is missed (minimizing false negatives), this could be a reasonable tradeoff. However, its overall performance (Accuracy of 84.62%) shows there is room for improvement.
 
-Key takeaway: The Logistic Regression and MLPClassifier appear to be the best options for identifying unacceptable voice rehabilitation outcomes, which may be the most critical aspect of this application. Their ability to maximize recall ensures fewer false negatives, leading to more accurate identification of problematic cases that require further intervention.
+2. **Logistic Regression**
+- Precision is perfect (100%), meaning that all predicted unacceptable cases (class 2) are indeed truly unacceptable. There are no false positives in this model's predictions. Recall (86.67%) is slightly lower than the SVC model, meaning it misses some unacceptable cases, but overall it performs quite well.
+- The F1-score (92.86%) strikes a good balance between Precision and Recall. The F1-macro (92.26%) shows consistent performance across both classes, indicating that the model performs well regardless of the class distribution. F1-micro (92.31%) aligns with the Accuracy, confirming that the model is robust overall.
+
+Key Takeaway: Logistic Regression offers a high-performing balance, with perfect Precision and strong Recall. This means it makes fewer mistakes in classifying unacceptable cases as acceptable (i.e. no false positives), though it does miss a few unacceptable cases. For applications where it is important to avoid false alarms (minimizing false positives), this model appears to be performing better than the SVC.
+
+3. **MLPClassifier**
+- This model delivers perfect scores across the board, meaning it identifies all unacceptable cases correctly (100% Recall) and also predicts them without error (100% Precision).
+- Both F1-micro and F1-macro scores are at 100%, indicating flawless performance for both classes regardless of class distribution. In medical contexts, this is ideal as it ensures that all unacceptable cases are identified without making any false positive or false negative errors.
+
+Key Takeaway: MLPClassifier stands out as the top-performing model, with perfect Precision, Recall and F1-scores. This makes it the most reliable for both identifying unacceptable cases and minimizing misclassifications. However, the perfect performance might be a result of the model overfitting, so further testing on unseen data is necessary to ensure generalizability.
 
 ## Conclusion
 
-This project demonstrated the power of machine learning in addressing complex, real-world challenges in voice rehabilitation classification. Through comprehensive model selection, tuning and evaluation, we found that Logistic Regression and Neural Networks provided the most accurate and reliable performance, especially in identifying unacceptable cases, which could be crucial for improving patient outcomes. Further enhancements could involve adding more features or experimenting with ensemble techniques to boost model performance even further. The current solution, however, is robust and can be used for deployment in clinical settings.
+This project demonstrated the power of machine learning in addressing complex, real-world challenges in voice rehabilitation classification. Through comprehensive model selection, tuning and evaluation, we found that Neural Networks appear to offer the best performance, but Logistic Regression could be a safer option to avoid false positives, especially in scenarios where overfitting may be a concern. Further testing on unseen data would provide a clearer picture of which model should be deployed in a real-world setting. Further enhancements could involve adding more features or experimenting with ensemble techniques to boost model performance even further without the risk of overfitting. The current solution, however, is robust and can be used for deployment in clinical settings.
 
 ## Dataset
 Tsanas, A. (2014). LSVT Voice Rehabilitation [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C52S4Z.
