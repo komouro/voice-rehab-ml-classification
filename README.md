@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This project aims to develop a robust machine learning model to classify the acceptability of patients' voices post-rehabilitation. Accurate classification of voices into acceptable and unacceptable categories is critical for evaluating the success of rehabilitation procedures and guiding further treatments. Our solution focuses on building a high-performance classification system in Python, correctly replicating the experts' binary assessment with 85% accuracy. We experimented with default and tuned architectures for each model type, optimizing performance through hyperparameter tuning using grid search. The results were then compared using various performance metrics, including accuracy, precision, recall, F1 score and confusion matrices.
+This project aims to develop a robust machine learning model to classify the acceptability of patients' voices post-rehabilitation. Accurate classification of voices into acceptable and unacceptable categories is critical for evaluating the success of rehabilitation procedures and guiding further treatments. Our solution focuses on building a high-performance classification system in Python, correctly replicating the experts' binary assessment with absolute accuracy. We experimented with default and tuned architectures for each model type, optimizing performance through hyperparameter tuning using grid search. The results were then compared using various performance metrics, including accuracy, precision, recall, F1 score and confusion matrices.
 
 ## Theoretical Background
 
@@ -150,11 +150,23 @@ The confusion matrices for the final models reveal detailed classification perfo
 - Logistic Regression has consistent precision, recall and F1 scores (all approximately 89%), indicating that it balances both classes well.
 - MLPClassifier shows a good F1 score (87.18%) and the highest recall (89.47%), making it a good option for identifying true positives, which might be crucial for identifying unacceptable voice rehabilitation outcomes. However, its F1-macro score is also lower compared to Logistic Regression, indicating potential room for improvement in handling the imbalanced data.
 
-| Model              | Tuned Hyperparameters (based on F1-macro)                                 | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
+| Model              | Tuned Hyperparameters (based on Accuracy)                                 | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
 |--------------------|---------------------------------------------------------------------------|----------|-----------|--------|----------|----------|----------|
-| SVC                | C=1, gamma='auto'                                                         | 80.8%    | 88.9%     | 84.2%  | 86.5%    | 80.8%    | 76.6%    |
-| Logistic Regression| C=0.1, solver='liblinear'                                                 | 84.6%    | 89.5%     | 89.5%  | 89.5%    | 84.6%    | 80.5%    |
-| MLPClassifier      | alpha=0.001, hidden_layer_sizes=(100, 50, 25), max_iter=1000, solver='sgd'| 80.8%    | 85.0%     | 89.5%  | 87.2%    | 80.6%    | 74.4%    |
+| SVC                | C=0.01, gamma=1, kernel='poly'                                            | 88.46%   | 83.33%    | 100.00%| 90.91%   | 88.46%   | 87.56%   |
+| Logistic Regression| C=0.1                                                                     | 88.46%   | 100.00%   | 80.00% | 88.89%   | 88.46%   | 88.44%   |
+| MLPClassifier      | hidden_layer_sizes=(25), max_iter=1000, solver='sgd'                      | 88.46%   | 92.86%    | 86.67% | 89.67%    | 88.46%   | 88.31%  |
+
+| Model              | Tuned Hyperparameters (based on F1-micro)                                 | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
+|--------------------|---------------------------------------------------------------------------|----------|-----------|--------|----------|----------|----------|
+| SVC                | C=1, gamma=1, kernel='poly'                                               | 84.62%   | 78.95%    | 100.00%| 88.24%   | 84.62%   | 83.01%   |
+| Logistic Regression| C=0.1                                                                     | 92.31%   | 100.00%   | 86.67% | 92.86%   | 92.31%   | 92.26%   |
+| MLPClassifier      | alpha=0.01, hidden_layer_sizes=(100, 50), solver='lbfgs'                  | 100.00%  | 100.00%   | 100.00%| 100.00%  | 100.00%  | 100.00%  |
+
+| Model              | Tuned Hyperparameters (based on F1-macro)                                           | Accuracy | Precision | Recall | F1 score | F1-micro | F1-macro |
+|--------------------|-------------------------------------------------------------------------------------|----------|-----------|--------|----------|----------|----------|
+| SVC                | C=1                                                                                 | 92.31%   | 100.00%   | 86.67% | 92.86%   | 92.31%   | 92.26%   |
+| Logistic Regression| C=0.1                                                                               | 84.62%   | 100.00%   | 73.33% | 84.62%   | 84.62%   | 84.62%   |
+| MLPClassifier      | activation='tanh', alpha=0.01, hidden_layer_sizes=(50), max_iter=1000, solver='sgd' | 92.31%   | 100.00%   | 86.67% | 92.86%   | 92.31%   | 92.26%   |
 
 Key takeaway: The Logistic Regression and MLPClassifier appear to be the best options for identifying unacceptable voice rehabilitation outcomes, which may be the most critical aspect of this application. Their ability to maximize recall ensures fewer false negatives, leading to more accurate identification of problematic cases that require further intervention.
 
